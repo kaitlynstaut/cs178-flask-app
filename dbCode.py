@@ -22,3 +22,17 @@ def execute_query(query, args=()):
     rows = cur.fetchall()
     cur.close()
     return rows
+
+def display_html(rows):
+    """
+    Converts query result rows into a simple HTML table string.
+    Flask routes can return this directly as a response.
+    """
+    html = "<table border='1'>"
+    for row in rows:
+        html += "<tr>"
+        for col in row:
+            html += f"<td>{col}</td>"
+        html += "</tr>"
+    html += "</table>"
+    return html

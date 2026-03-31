@@ -15,6 +15,28 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 def home():
     return render_template('home.html')
 
+@app.route('/viewdb')
+def view_all():
+    """
+    Fetches all items from the clothing_store database
+    and returns them as an HTML table.
+    Route: /viewdb
+    """
+    rows = execute_query("""
+        SELECT
+            c.name,
+            c.category,
+            a.color,
+            a.material,
+            ca.stock_qty,
+            c.base_price
+        FROM clothing_attributes ca
+        JOIN clothing c ON ca.clothing_id  = c.clothing_id
+        JOIN attributes a ON ca.attribute_id = a.attribute_id
+        ORDER BY c.clothing_id, a.color
+    """)
+    return display_html(rows)
+
 @app.route('/add-user', methods=['GET', 'POST'])
 def add_user():
     if request.method == 'POST':
@@ -52,22 +74,12 @@ def delete_user():
         return render_template('delete_user.html')
 
 
-@app.route('/view_all')
-def view_all():
-    item_list = execute_query("""
-        SELECT
-            c.name,
-            c.category,
-            a.color,
-            a.material,
-            ca.stock_qty,
-            c.base_price
-        FROM clothing_attributes ca
-        JOIN clothing c ON ca.clothing_id  = c.clothing_id
-        JOIN attributes a ON ca.attribute_id = a.attribute_id
-        ORDER BY c.clothing_id, a.color
-    """)
-    return render_template('view_all.html', items=item_list)
+@app.route('/display-users')
+def display_users():
+    # hard code a value to the users_list;
+    # note that this could have been a result from an SQL query :) 
+    users_list = (('John','Doe','Comedy'),('Jane', 'Doe','Drama'))
+    return render_template('display_users.html', users = users_list)
 
 
 # these two lines of code should always be the last in the file
