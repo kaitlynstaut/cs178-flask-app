@@ -35,7 +35,7 @@ def view_all():
         JOIN attributes a ON ca.attribute_id = a.attribute_id
         ORDER BY c.clothing_id, a.color
     """)
-    return render_template('view_all.html', items=rows)
+    return render_template('viewdb.html', items=rows)
 
 @app.route('/add-user', methods=['GET', 'POST'])
 def add_user():
