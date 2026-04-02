@@ -124,12 +124,12 @@ def add_item():
 def delete_item():
     if request.method == 'POST':
         # Extract form data
-        name = request.form['name']
+        sku = request.form['sku']
         
         # Process the data (e.g., add it to a database)
         execute_query(
-            "DELETE FROM clothing WHERE name = %s",
-            (name,)
+            "DELETE FROM clothing.attributes WHERE sku = %s",
+            (sku,)
         )
         
         flash('Item deleted successfully!', 'warning') 
