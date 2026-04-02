@@ -102,7 +102,7 @@ def add_item():
     if request.method == 'POST':
         name = request.form['name']
         category = request.form['category']
-        price = request.form['price']
+        price = float(request.form['price'])
         color = request.form['color']
         sku = request.form['sku']
         stock_qty = request.form['stock_qty']
