@@ -3,8 +3,9 @@
 # Helper functions for database connection and queries
 
 import pymysql
-import boto3
 import creds
+import uuid
+import boto3
 
 def get_conn():
     """Returns a connection to the MySQL RDS instance."""
