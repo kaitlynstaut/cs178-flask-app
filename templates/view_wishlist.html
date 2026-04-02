@@ -15,7 +15,6 @@
         <th>SKU</th>
         <th>Color</th>
         <th>Price</th>
-        <th>Date Added</th>
         <th>Wishlist ID</th>
       </tr>
       {% for item in items %}
@@ -24,7 +23,6 @@
         <td>{{ item.sku }}</td>
         <td>{{ item.color }}</td>
         <td>${{ item.price }}</td>
-        <td>{{ item.date_added }}</td>
         <td>{{ item.wishlist_id }}</td>
       </tr>
       {% endfor %}
