@@ -31,28 +31,6 @@ def customer():
 #MySQL Inventory##
 ##################
 
-@app.route('/viewdb')
-def view_all():
-    """
-    Fetches all items from the clothing_store database
-    and returns them as an HTML table.
-    Route: /viewdb
-    """
-    rows = execute_query("""
-        SELECT
-            c.name,
-            c.category,
-            a.color,
-            a.material,
-            ca.stock_qty,
-            c.base_price
-        FROM clothing_attributes ca
-        JOIN clothing c ON ca.clothing_id  = c.clothing_id
-        JOIN attributes a ON ca.attribute_id = a.attribute_id
-        ORDER BY c.clothing_id, a.color
-    """)
-    return render_template('viewdb.html', items=rows)
-
 # Item query by category
 @app.route("/browse/<category>")
 def browse(category):
