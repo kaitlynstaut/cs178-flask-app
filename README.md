@@ -1,8 +1,8 @@
-# [Your Project Name Here]
+# Clothing Store Webpage
 
 **CS178: Cloud and Database Systems — Project #1**
-**Author:** [Your Name]
-**GitHub:** [your-username]
+**Author:** [Kaitlyn Staut]
+**GitHub:** [kaitlynstaut]
 
 ---
 
@@ -28,10 +28,9 @@
 ProjectOne/
 ├── flaskapp.py          # Main Flask application — routes and app logic
 ├── dbCode.py            # Database helper functions (MySQL connection + queries)
-├── creds_sample.py      # Sample credentials file (see Credential Setup below)
 ├── templates/
 │   ├── home.html        # Landing page
-│   ├── [other].html     # Add descriptions for your other templates
+│   ├── viewdb.html      # View all clothing items in the database (and details) in a table
 ├── .gitignore           # Excludes creds.py and other sensitive files
 └── README.md
 ```
@@ -43,8 +42,8 @@ ProjectOne/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/kaitlynstaut/cs178-flask-app.git
+   cd cs178-flask-app
    ```
 
 2. Install dependencies:
@@ -70,7 +69,7 @@ ProjectOne/
 The app is deployed on an AWS EC2 instance. To view the live version:
 
 ```
-http://[your-ec2-public-ip]:8080
+http://ec2-100-55-64-236.compute-1.amazonaws.com:8080
 ```
 
 _(Note: the EC2 instance may not be running after project submission.)_
