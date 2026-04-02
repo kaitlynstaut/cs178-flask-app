@@ -96,27 +96,43 @@ def browse_form_post():
     
     return browse(text)
 
-# Add item
+# Add item (used AI to help me insert info entered here to ALL tables in the database)
 @app.route('/add-item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
-        # Extract form data
         name = request.form['name']
         category = request.form['category']
         price = request.form['price']
+        color = request.form['color']
+        sku = request.form['sku']
+        stock_qty = request.form['stock_qty']
 
-        # Process the data (e.g., add it to a database)
+        # 1. Insert the base item into clothing, get back its new ID
         execute_query(
             "INSERT INTO clothing (name, category, base_price) VALUES (%s, %s, %s)",
             (name, category, price)
         )
-        
-        flash('Item added successfully!', 'success')  # 'success' is a category; makes a green banner at the top
-        # Redirect to home page or another page upon successful submission
+        result = execute_query("SELECT LAST_INSERT_ID() AS id")
+        clothing_id = result[0]['id']
+
+        # 2. Insert the color into attributes (if it doesn't already exist), get back its ID
+        execute_query(
+            "INSERT IGNORE INTO attributes (color) VALUES (%s)",
+            (color,)
+        )
+        result = execute_query("SELECT attribute_id FROM attributes WHERE color = %s", (color,))
+        attribute_id = result[0]['attribute_id']
+
+        # 3. Insert the variant into clothing_attributes
+        execute_query(
+            "INSERT INTO clothing_attributes (sku, clothing_id, attribute_id, stock_qty) VALUES (%s, %s, %s, %s)",
+            (sku, clothing_id, attribute_id, stock_qty)
+        )
+
+        flash('Item added successfully!', 'success')
         return redirect(url_for('admin'))
     else:
-        # Render the form page if the request method is GET
-        categories  = ["tops", "bottoms", "outerwear", "other"]
+        categories = ["tops", "bottoms", "outerwear", "other"]
         return render_template('add_item.html', categories=categories)
     
 # Delete item
@@ -128,7 +144,7 @@ def delete_item():
         
         # Process the data (e.g., add it to a database)
         execute_query(
-            "DELETE FROM clothing.attributes WHERE sku = %s",
+            "DELETE FROM clothing_attributes WHERE sku = %s",
             (sku,)
         )
         
