@@ -33,6 +33,6 @@ def execute_insert(query, args=()):
     cur = conn.cursor(pymysql.cursors.DictCursor)
     cur.execute(query, args)
     conn.commit()
-    last_id = cur.lastrowid
+    last_id = cur.lastrowid # gets the ID of the row that was just inserted.
     cur.close()
     return last_id
