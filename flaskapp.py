@@ -112,8 +112,11 @@ def add_item():
             "INSERT INTO clothing (name, category, base_price) VALUES (%s, %s, %s)",
             (name, category, price)
         )
-        result = execute_query("SELECT LAST_INSERT_ID() AS id")
-        clothing_id = result[0]['id']
+        result = execute_query(
+            "SELECT clothing_id FROM clothing WHERE name = %s AND category = %s AND base_price = %s ORDER BY clothing_id DESC LIMIT 1",
+            (name, category, price)
+        )
+        clothing_id = result[0]['clothing_id']
 
         # 2. Insert the color into attributes (if it doesn't already exist), get back its ID
         execute_query(
