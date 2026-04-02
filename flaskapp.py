@@ -58,7 +58,7 @@ def browse(category):
     or from the POST form handler below.
     """
     rows = execute_query("""
-        SELECT c.name, c.category, a.color, c.base_price
+        SELECT c.name, c.category, a.color, c.base_price, ca.sku,
             FROM clothing_attributes ca
             JOIN clothing c ON ca.clothing_id = c.clothing_id
             JOIN attributes a ON ca.attribute_id = a.attribute_id
