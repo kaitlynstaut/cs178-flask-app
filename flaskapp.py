@@ -138,7 +138,7 @@ def delete_item():
         sku = request.form['sku']
         
         # Process the data (e.g., add it to a database)
-        execute_query(
+        execute_insert(
             "DELETE FROM clothing_attributes WHERE sku = %s",
             (sku,)
         )
@@ -159,10 +159,10 @@ def update_stock():
         qty = request.form['stock_qty']
 
         # Update MySQL
-        execute_query(
+        execute_insert(
             "UPDATE clothing_attributes SET stock_qty = %s WHERE sku = %s",
             (qty, sku)
-        )
+)
 
         flash('Stock updated successfully!', 'info')
         return redirect(url_for('admin'))
