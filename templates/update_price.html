@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Update Price</title>
+  </head>
+  <body>
+    <h1>Update Price</h1>
+    <form action="{{ url_for('update_price') }}" method="post">
+      <label for="sku">SKU:</label><br />
+      <input type="text" id="sku" name="sku" required /><br />
+      <label for="price">New Price:</label><br />
+      <input type="text" id="price" name="price" required /><br />
+      <input type="submit" value="Update" />
+    </form>
+  </body>
+</html>

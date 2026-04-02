@@ -150,24 +150,27 @@ def delete_item():
         # Render the form page if the request method is GET
         return render_template('delete_item.html')
     
-# Update stock
-@app.route('/update-stock', methods=['GET', 'POST'])
-def update_stock():
+# Update price
+@app.route('/update-price', methods=['GET', 'POST'])
+def update_price():
     if request.method == 'POST':
         # Extract form data
         sku = request.form['sku']
-        qty = request.form['stock_qty']
+        price = request.form['price']
 
         # Update MySQL
         execute_insert(
-            "UPDATE clothing_attributes SET stock_qty = %s WHERE sku = %s",
-            (qty, sku)
-)
+            """UPDATE clothing c
+            JOIN clothing_attributes ca ON c.clothing_id = ca.clothing_id
+            SET c.base_price = %s
+            WHERE ca.sku = %s""",
+            (float(price), sku)
+        )
 
-        flash('Stock updated successfully!', 'info')
+        flash('Price updated successfully!', 'info')
         return redirect(url_for('admin'))
     else:
-        return render_template('update_stock.html')
+        return render_template('update_price.html')
     
 
 ###################
