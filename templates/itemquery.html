@@ -1,44 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Browse by Category</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Browse Inventory</title>
 </head>
 <body>
-    <div class="container">
-        <h2 class="mt-5">Results for: {{ category }}</h2>
+    <h2>Results for: {{ category }}</h2>
 
-        {% if items %}
-        <table class="table table-bordered table-striped mt-3">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Color</th>
-                    <th>Price</th>
-                    <th>SKU</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in items %}
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.color }}</td>
-                    <td>${{ item.base_price }}</td>
-                    <td>{{ item.sku }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-            <div class="alert alert-warning mt-3">
-                No items found for "<strong>{{ category }}</strong>". Try: tops, bottoms, or outerwear.
-            </div>
-        {% endif %}
+    {% if items %}
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Color</th>
+                <th>Price</th>
+                <th>SKU</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.color }}</td>
+                <td>${{ item.base_price }}</td>
+                <td>{{ item.sku }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No items found for "<strong>{{ category }}</strong>".</p>
+    {% endif %}
 
-        <a href="/browsetextbox" class="btn btn-primary">Search Again</a>
-        <a href="/admin" class="btn btn-secondary">Back to Admin</a>
-    </div>
+    <br>
+    <a href="/browsetextbox">Search Again</a>
+    <a href="/admin" class="btn btn-secondary">Back to Admin</a>
 </body>
 </html>

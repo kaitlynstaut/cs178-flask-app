@@ -58,7 +58,7 @@ def browse(category):
     or from the POST form handler below.
     """
     rows = execute_query("""
-        SELECT c.name, c.category, a.color, c.base_price, ca.sku,
+        SELECT c.name, c.category, a.color, c.base_price, ca.sku
             FROM clothing_attributes ca
             JOIN clothing c ON ca.clothing_id = c.clothing_id
             JOIN attributes a ON ca.attribute_id = a.attribute_id
@@ -74,7 +74,8 @@ def browse_form():
     GET handler: renders the empty search form.
     The 'fieldname' variable fills in the label text in textbox.html.
     """
-    return render_template('textbox.html', fieldname="Category")
+    categories  = ["tops", "bottoms", "outerwear", "other"]
+    return render_template('textbox.html', fieldname="Category", categories = categories)
 
 @app.route('/browsetextbox', methods=['POST'])
 def browse_form_post():
@@ -83,6 +84,16 @@ def browse_form_post():
     then calls browse() to run the query and return the table.
     """
     text = request.form['text']
+
+    if text == 'all':
+        rows = execute_query("""
+            SELECT c.name, c.category, a.color, c.base_price, ca.sku
+                FROM clothing_attributes ca
+                JOIN clothing c ON ca.clothing_id = c.clothing_id
+                JOIN attributes a ON ca.attribute_id = a.attribute_id
+        """)
+        return render_template('itemquery.html', items=rows, category="All")
+    
     return browse(text)
 
 # Add item
@@ -151,6 +162,83 @@ def update_stock():
 #DynamoDB Wishlist#
 ###################
 
+# View wishlist
+@app.route('/view-wishlist')
+def view_wishlist():
+    # Read all items from DynamoDB
+    response = table.scan()
+    items = response['Items']
+    return render_template('view_wishlist.html', items=items)
+
+# Add to wishlist
+@app.route('/add-to-wishlist', methods=['GET', 'POST'])
+def add_to_wishlist():
+    if request.method == 'POST':
+        # Extract form data
+        name = request.form['name']
+        sku = request.form['sku']
+        color = request.form['color']
+        price = request.form['price']
+
+        # Insert into DynamoDB
+        table.put_item(Item={
+            'wishlist_id': str(uuid.uuid4()),
+            'name': name,
+            'sku': sku,
+            'color': color,
+            'price': price
+        })
+
+        flash('Item added to wishlist!', 'success')
+        return redirect(url_for('customer'))
+    else:
+        return render_template('add_to_wishlist.html')
+
+# Update wishlist
+@app.route('/update-wishlist', methods=['GET', 'POST'])
+def update_wishlist():
+    if request.method == 'POST':
+        # Extract form data
+        wishlist_id = request.form['wishlist_id']
+        name = request.form['name']
+        sku = request.form['sku']
+        color = request.form['color']
+        price = request.form['price']
+
+        # Update item in DynamoDB
+        table.update_item(
+            Key={'wishlist_id': wishlist_id},
+            UpdateExpression='SET #n = :name, sku = :sku, color = :color, price = :price',
+            ExpressionAttributeNames={'#n': 'name'},
+            ExpressionAttributeValues={
+                ':name': name,
+                ':sku': sku,
+                ':color': color,
+                ':price': price
+            }
+        )
+
+        flash('Wishlist item updated!', 'info')
+        return redirect(url_for('view_wishlist'))
+    else:
+        return render_template('update_wishlist.html')
+
+# Clear wishlist
+def clear_wishlist():
+    if request.method == 'POST':
+        # Scan and delete all items from DynamoDB
+        response = table.scan()
+        items = response['Items']
+
+        for item in items:
+            table.delete_item(
+                Key={'wishlist_id': item['wishlist_id']}
+            )
+
+        flash('Wishlist cleared!', 'warning')
+        return redirect(url_for('customer'))
+    else:
+        return render_template('clear_wishlist.html')
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
