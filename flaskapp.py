@@ -107,27 +107,19 @@ def add_item():
         sku = request.form['sku']
         stock_qty = request.form['stock_qty']
 
-        # 1. Insert the base item into clothing, get back its new ID
-        execute_query(
+        # 1. Insert base item, get its new ID via lastrowid
+        clothing_id = execute_insert(
             "INSERT INTO clothing (name, category, base_price) VALUES (%s, %s, %s)",
             (name, category, price)
         )
-        result = execute_query(
-            "SELECT clothing_id FROM clothing WHERE name = %s AND category = %s AND base_price = %s ORDER BY clothing_id DESC LIMIT 1",
-            (name, category, price)
-        )
-        clothing_id = result[0]['clothing_id']
 
-        # 2. Insert the color into attributes (if it doesn't already exist), get back its ID
-        execute_query(
-            "INSERT IGNORE INTO attributes (color) VALUES (%s)",
-            (color,)
-        )
+        # 2. Insert color if it doesn't exist, then fetch its ID
+        execute_insert("INSERT IGNORE INTO attributes (color) VALUES (%s)", (color,))
         result = execute_query("SELECT attribute_id FROM attributes WHERE color = %s", (color,))
         attribute_id = result[0]['attribute_id']
 
-        # 3. Insert the variant into clothing_attributes
-        execute_query(
+        # 3. Insert the variant linking everything together
+        execute_insert(
             "INSERT INTO clothing_attributes (sku, clothing_id, attribute_id, stock_qty) VALUES (%s, %s, %s, %s)",
             (sku, clothing_id, attribute_id, stock_qty)
         )
