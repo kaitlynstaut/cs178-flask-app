@@ -9,7 +9,11 @@
       <label for="name">Name:</label><br />
       <input type="text" id="name" name="name" required /><br />
       <label for="category">Category (tops, bottoms, outerwear):</label><br />
-      <input type="text" id="category" name="category" required /><br />
+        <select id="category" name="category" required>
+          {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select><br />
       <label for="price">Base Price:</label><br />
       <input type="text" id="price" name="price" required /><br />
       <input type="submit" value="Submit" />
