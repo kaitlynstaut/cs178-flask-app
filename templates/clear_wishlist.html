@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Clear Wishlist</title>
+  </head>
+  <body>
+    <h1>Clear Wishlist</h1>
+    <p>Are you sure you want to clear your entire wishlist? This cannot be undone.</p>
+    <form action="{{ url_for('clear_wishlist') }}" method="post">
+      <input type="submit" value="Yes, Clear My Wishlist" />
+    </form>
+    <br />
+    <a href="{{ url_for('customer') }}"><button>Cancel</button></a>
+</body>
+</html>

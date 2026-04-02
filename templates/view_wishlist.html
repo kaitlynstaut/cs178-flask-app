@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>View Wishlist</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container"></div>
+    <h1>My Wishlist</h1>
+    {% if items %}
+    <table class="table table-bordered table-striped mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>SKU</th>
+        <th>Color</th>
+        <th>Price</th>
+        <th>Date Added</th>
+        <th>Wishlist ID</th>
+      </tr>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.sku }}</td>
+        <td>{{ item.color }}</td>
+        <td>${{ item.price }}</td>
+        <td>{{ item.date_added }}</td>
+        <td>{{ item.wishlist_id }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>Your wishlist is empty!</p>
+    {% endif %}
+    <br />
+    <a href="{{ url_for('customer') }}"><button>Back to Customer</button></a>
+  </body>
+</html>

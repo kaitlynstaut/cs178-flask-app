@@ -11,6 +11,10 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
                                    # it is required, but you can leave this alone
 
+# Connect to DynamoDB
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb.Table('Wishlist')
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -209,7 +213,7 @@ def add_to_wishlist():
     else:
         return render_template('add_to_wishlist.html')
 
-# Update wishlist
+# Update wishlist (Used AI to remember how to use the update_item function)
 @app.route('/update-wishlist', methods=['GET', 'POST'])
 def update_wishlist():
     if request.method == 'POST':
@@ -239,6 +243,7 @@ def update_wishlist():
         return render_template('update_wishlist.html')
 
 # Clear wishlist
+@app.route('/clear-wishlist', methods=['GET', 'POST'])
 def clear_wishlist():
     if request.method == 'POST':
         # Scan and delete all items from DynamoDB

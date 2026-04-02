@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Add to Wishlist</title>
+  </head>
+  <body>
+    <h1>Add Item to Wishlist</h1>
+    <form action="{{ url_for('add_to_wishlist') }}" method="post">
+      <label for="name">Item Name:</label><br />
+      <input type="text" id="name" name="name" required /><br />
+      <label for="sku">SKU:</label><br />
+      <input type="text" id="sku" name="sku" required /><br />
+      <label for="color">Color:</label><br />
+      <input type="text" id="color" name="color" required /><br />
+      <label for="price">Price:</label><br />
+      <input type="text" id="price" name="price" required /><br />
+      <input type="submit" value="Add to Wishlist" />
+    </form>
+    <br />
+    <a href="{{ url_for('customer') }}"><button>Back to Customer</button></a>
+  </body>
+</html>
