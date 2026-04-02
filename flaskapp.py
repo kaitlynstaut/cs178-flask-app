@@ -15,6 +15,14 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 def home():
     return render_template('home.html')
 
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
+@app.route('/customer')
+def customer():
+    return render_template('customer.html')
+
 ##################
 #MySQL Inventory##
 ##################
@@ -77,10 +85,7 @@ def browse_form_post():
     text = request.form['text']
     return browse(text)
 
-
-###################
-#DynamoDB Wishlist#
-###################
+# Add item
 @app.route('/add-item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
@@ -97,11 +102,12 @@ def add_item():
         
         flash('Item added successfully!', 'success')  # 'success' is a category; makes a green banner at the top
         # Redirect to home page or another page upon successful submission
-        return redirect(url_for('home'))
+        return redirect(url_for('admin'))
     else:
         # Render the form page if the request method is GET
         return render_template('add_item.html')
-
+    
+# Delete item
 @app.route('/delete-item',methods=['GET', 'POST'])
 def delete_item():
     if request.method == 'POST':
@@ -114,20 +120,36 @@ def delete_item():
             (name,)
         )
         
-        flash('Item deleted successfully! Hoorah!', 'warning') 
-        # Redirect to home page or another page upon successful submission
-        return redirect(url_for('home'))
+        flash('Item deleted successfully!', 'warning') 
+        # Redirect to admin page upon successful submission
+        return redirect(url_for('admin'))
     else:
         # Render the form page if the request method is GET
         return render_template('delete_item.html')
+    
+# Update stock
+@app.route('/update-stock', methods=['GET', 'POST'])
+def update_stock():
+    if request.method == 'POST':
+        # Extract form data
+        sku = request.form['sku']
+        qty = request.form['stock_qty']
 
+        # Update MySQL
+        execute_query(
+            "UPDATE clothing_attributes SET stock_qty = %s WHERE sku = %s",
+            (qty, sku)
+        )
 
-@app.route('/display-users')
-def display_users():
-    # hard code a value to the users_list;
-    # note that this could have been a result from an SQL query :) 
-    users_list = (('John','Doe','Comedy'),('Jane', 'Doe','Drama'))
-    return render_template('display_users.html', users = users_list)
+        flash('Stock updated successfully!', 'info')
+        return redirect(url_for('admin'))
+    else:
+        return render_template('update_stock.html')
+    
+
+###################
+#DynamoDB Wishlist#
+###################
 
 
 # these two lines of code should always be the last in the file
