@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query Form</title>
+</head>
+<body>
+    <h2>Enter a value to search:</h2>
+
+    <!-- The action="" means this form posts back to the same route -->
+    <!-- method="post" triggers the POST handler in Flask -->
+    <form action="" method="post">
+        <label for="text">{{ fieldname }}:</label>
+        <input type="text" id="text" name="text">
+        <input type="submit" value="Submit Query">
+    </form>
+</body>
+</html>
