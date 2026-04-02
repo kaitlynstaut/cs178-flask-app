@@ -5,20 +5,19 @@ CREATE TABLE clothing (
     clothing_id  INT           NOT NULL AUTO_INCREMENT,
     name         VARCHAR(100)  NOT NULL,
     category     VARCHAR(50)   NOT NULL,  -- e.g. 'tops', 'bottoms', 'outerwear'
-    gender       ENUM('mens','womens','unisex') NOT NULL DEFAULT 'unisex',
     base_price   DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (clothing_id)
 );
 
-INSERT INTO clothing (name, category, gender, base_price) VALUES
-('Classic Crewneck Tee',     'tops',       'unisex',  19.99),
-('Slim Fit Chinos',          'bottoms',    'mens',    59.99),
-('Oversized Hoodie',         'tops',       'unisex',  64.99),
-('High-Waist Flare Jeans',   'bottoms',    'womens',  79.99),
-('Puffer Vest',              'outerwear',  'unisex',  89.99),
-('Linen Button-Down Shirt',  'tops',       'mens',    49.99),
-('A-Line Midi Skirt',        'bottoms',    'womens',  44.99),
-('Trench Coat',              'outerwear',  'unisex', 139.99);
+INSERT INTO clothing (name, category, base_price) VALUES
+('Classic Crewneck Tee',     'tops',     19.99),
+('Slim Fit Chinos',          'bottoms',     59.99),
+('Oversized Hoodie',         'tops',  64.99),
+('High-Waist Flare Jeans',   'bottoms',   79.99),
+('Puffer Vest',              'outerwear',  89.99),
+('Linen Button-Down Shirt',  'tops',    49.99),
+('A-Line Midi Skirt',        'bottoms',   44.99),
+('Trench Coat',              'outerwear',  139.99);
 
 
 -- ============================================================
@@ -27,22 +26,21 @@ INSERT INTO clothing (name, category, gender, base_price) VALUES
 CREATE TABLE attributes (
     attribute_id  INT          NOT NULL AUTO_INCREMENT,
     color         VARCHAR(50)  NOT NULL,
-    material      VARCHAR(100) NOT NULL,
-    hex_code      CHAR(7)      NULL,      -- optional display color, e.g. '#1A1A2E'
+    material      VARCHAR(100) NOT NULL
     PRIMARY KEY (attribute_id)
 );
 
 INSERT INTO attributes (color, material, hex_code) VALUES
-('Midnight Black',  '100% Cotton',             '#1A1A1A'),
-('Heather Gray',    '80% Cotton / 20% Polyester','#9E9E9E'),
-('Navy Blue',       '100% Cotton',             '#1F3A6E'),
-('Bone White',      '100% Linen',              '#F5F0E8'),
-('Forest Green',    '100% Cotton',             '#2D5016'),
-('Dusty Rose',      '95% Cotton / 5% Elastane','#C9A0A0'),
-('Camel',           '70% Wool / 30% Polyester','#C19A6B'),
-('Slate Blue',      'Stretch Denim',           '#6A80A0'),
-('Rust Orange',     '100% Cotton',             '#B84A2A'),
-('Cream',           '100% Linen',              '#FFF8E7');
+('Midnight Black',  '100% Cotton'),
+('Heather Gray',    '80% Cotton / 20% Polyester'),
+('Navy Blue',       '100% Cotton'),
+('Bone White',      '100% Linen'),
+('Forest Green',    '100% Cotton'),
+('Dusty Rose',      '95% Cotton / 5% Elastane'),
+('Camel',           '70% Wool / 30% Polyester'),
+('Slate Blue',      'Stretch Denim'),
+('Rust Orange',     '100% Cotton'),
+('Cream',           '100% Linen');
 
 
 -- ============================================================

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Add New User</title>
+    <title>Add Item</title>
   </head>
   <body>
-    <h1>Add New User</h1>
-    <form action="{{ url_for('add_user') }}" method="post">
-      <label for="first name">First Name:</label><br />
-      <input type="text" id="first name" name="first name" required /><br />
-      <label for="last name">Last Name:</label><br />
-      <input type="text" id="last name" name="last name" required /><br />
-      <label for="genre">Favorite Genre:</label><br />
-      <input type="text" id="genre" name="genre" required /><br />
+    <h1>Add New Clothing Item</h1>
+    <form action="{{ url_for('add_item') }}" method="post">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" required /><br />
+      <label for="category">Category (tops, bottoms, outerwear):</label><br />
+      <input type="text" id="category" name="category" required /><br />
+      <label for="price">Base Price:</label><br />
+      <input type="text" id="price" name="price" required /><br />
       <input type="submit" value="Submit" />
     </form>
   </body>

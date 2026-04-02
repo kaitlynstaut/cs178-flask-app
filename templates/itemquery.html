@@ -16,6 +16,7 @@
                     <th>Category</th>
                     <th>Color</th>
                     <th>Price</th>
+                    <th>SKU</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                     <td>{{ item.category }}</td>
                     <td>{{ item.color }}</td>
                     <td>${{ item.base_price }}</td>
+                    <td>{{ item.sku }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

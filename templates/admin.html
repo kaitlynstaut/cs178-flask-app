@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home Page</title>
+    <title>Store Admin</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -15,10 +15,15 @@
         {% endif %}
     {% endwith %}
     <div class="container">
-        <h1 class="mt-5">Kaitlyn's Clothing Store</h1>
+        <h1 class="mt-5">Store Admin</h1>
         <div class="mt-3">
-            <a href="/admin" class="btn btn-primary">Store Admin</a>
-            <a href="/customer" class="btn btn-success">Customer</a>
+            <a href="/add-item" class="btn btn-primary">Add Item</a>
+            <a href="/delete-item" class="btn btn-danger">Delete Item</a>
+            <a href="/update-stock" class="btn btn-secondary">Update Stock</a>
+            <a href="/browsetextbox" class="btn btn-info">Browse Inventory</a>
+        </div>
+        <div class="mt-3">
+            <a href="/" class="btn btn-dark">Back to Home</a>
         </div>
     </div>
 </body>
