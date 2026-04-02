@@ -116,7 +116,8 @@ def add_item():
         return redirect(url_for('admin'))
     else:
         # Render the form page if the request method is GET
-        return render_template('add_item.html')
+        categories  = ["tops", "bottoms", "outerwear", "other"]
+        return render_template('add_item.html', categories=categories)
     
 # Delete item
 @app.route('/delete-item',methods=['GET', 'POST'])
